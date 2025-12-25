@@ -1,0 +1,134 @@
+.section {
+    padding: 4rem 1rem;
+    background: var(--background);
+}
+
+.title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
+
+.cardHeader {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.projectName {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.projectRole {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 1px solid var(--card-border);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.tab {
+    flex: 1;
+    padding: 1rem;
+    text-align: center;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.tab:hover {
+    color: var(--foreground);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.activeTab {
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.content {
+    padding: 1.5rem;
+    flex: 1;
+}
+
+.viewTitle {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.metrics {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+}
+
+.metrics li {
+    margin-bottom: 0.75rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--secondary);
+}
+
+.stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.techTag {
+    background: var(--card-border);
+    color: var(--text-muted);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-family: var(--tech-mono);
+}
+
+.artifactLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary);
+    font-size: 0.9rem;
+    margin-top: auto;
+}
+
+.artifactLink:hover {
+    text-decoration: underline;
+}

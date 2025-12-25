@@ -1,0 +1,91 @@
+.section {
+    padding: 6rem 0;
+    background: var(--background);
+}
+
+.title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 4rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 2rem;
+    border-radius: var(--radius);
+    position: relative;
+    border: 1px solid transparent;
+}
+
+.quote {
+    font-size: 1.1rem;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    color: #d4d4d4;
+    line-height: 1.6;
+}
+
+.author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.avatar {
+    width: 48px;
+    height: 48px;
+    background: #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #fff;
+}
+
+.authorInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    font-weight: 600;
+    color: var(--foreground);
+}
+
+.role {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+/* Category Badge */
+.badge {
+    position: absolute;
+    top: -12px;
+    left: 2rem;
+    background: var(--card-border);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+.techBadge {
+    color: var(--primary);
+    border: 1px solid var(--primary);
+}
+
+.bizBadge {
+    color: var(--secondary);
+    border: 1px solid var(--secondary);
+}

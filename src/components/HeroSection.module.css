@@ -1,0 +1,72 @@
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 80vh;
+    padding: 2rem 0;
+    background: radial-gradient(circle at top center, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+}
+
+.headline {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    max-width: 900px;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(to right, #fff, #a5b4fc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.subheadline {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin-bottom: 2.5rem;
+}
+
+.ctaGroup {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.primaryBtn {
+    background: var(--primary);
+    color: white;
+    padding: 0.875rem 1.5rem;
+    border-radius: var(--radius);
+    font-weight: 600;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.primaryBtn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.secondaryBtn {
+    background: transparent;
+    border: 1px solid var(--card-border);
+    color: var(--foreground);
+    padding: 0.875rem 1.5rem;
+    border-radius: var(--radius);
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.secondaryBtn:hover {
+    background: var(--card-border);
+}
+
+@media (max-width: 768px) {
+    .headline {
+        font-size: 2.5rem;
+    }
+}
