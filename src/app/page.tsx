@@ -154,34 +154,56 @@ export default function ChatPage() {
               </div>
             )}
 
-            {messages.map((m) => (
-              <div
-                key={m.id}
-                className={`flex gap-3 animate-in fade-in slide-in-from-bottom-2 duration-300 ${m.role === 'user' ? 'justify-end' : 'justify-start'
-                  }`}
-              >
-                {m.role !== 'user' && (
-                  <div className="w-6 h-6 rounded-lg bg-gray-800/50 border border-gray-700/50 flex items-center justify-center shrink-0 mt-0.5">
-                    <Bot className="w-3.5 h-3.5 text-gray-400" />
-                  </div>
-                )}
+            {messages.map((m) => {
+              const content = getMessageContent(m);
+              // Split by blank lines (newline followed by optional whitespace followed by newline)
+              // This handles \n\n, \n \n, \n\t\n, etc.
+              const bubbles = content
+                .split(/\n\s*\n/)
+                .filter((b: string) => {
+                  // Filter out strings that are empty or contain only invisible characters/whitespace
+                  // [\p{C}\p{Z}] covers control characters and separators in unicode
+                  // But standard .trim() + replace for zero-width spaces is usually robust enough
+                  return b.trim().replace(/[\u200B-\u200D\uFEFF]/g, '').length > 0;
+                });
 
+              if (bubbles.length === 0) return null;
+
+              return (
                 <div
-                  className={`max-w-[85%] rounded-2xl px-4 py-2.5 shadow-sm text-sm ${m.role === 'user'
-                    ? 'bg-blue-600 text-white rounded-br-none'
-                    : 'bg-gray-900 border border-gray-800 text-gray-100 rounded-bl-none'
+                  key={m.id}
+                  className={`flex gap-3 animate-in fade-in slide-in-from-bottom-2 duration-300 ${m.role === 'user' ? 'justify-end' : 'justify-start'
                     }`}
                 >
-                  {m.role === 'user' ? (
-                    <p className="leading-relaxed whitespace-pre-wrap">{getMessageContent(m)}</p>
-                  ) : (
-                    <div className="prose prose-invert prose-sm max-w-none prose-p:leading-relaxed prose-pre:bg-gray-950 prose-pre:border prose-pre:border-gray-800 prose-p:text-sm prose-pre:text-xs">
-                      <ReactMarkdown>{getMessageContent(m)}</ReactMarkdown>
+                  {m.role !== 'user' && (
+                    <div className="w-6 h-6 rounded-lg bg-gray-800/50 border border-gray-700/50 flex items-center justify-center shrink-0 mt-0.5">
+                      <Bot className="w-3.5 h-3.5 text-gray-400" />
                     </div>
                   )}
+
+                  <div className={`flex flex-col gap-2 max-w-[85%] ${m.role === 'user' ? 'items-end' : 'items-start'}`}>
+                    {bubbles.map((bubble: string, i: number) => (
+                      <div
+                        key={i}
+                        className={`rounded-2xl px-4 py-2.5 shadow-sm text-sm w-fit ${m.role === 'user'
+                          ? 'bg-blue-600 text-white rounded-br-none'
+                          : 'bg-gray-900 border border-gray-800 text-gray-100 rounded-bl-none'
+                          }`}
+                      >
+                        {m.role === 'user' ? (
+                          <p className="leading-relaxed whitespace-pre-wrap">{bubble}</p>
+                        ) : (
+                          <div className="prose prose-invert prose-sm max-w-none prose-p:leading-relaxed prose-pre:bg-gray-950 prose-pre:border prose-pre:border-gray-800 prose-p:text-sm prose-pre:text-xs">
+                            <ReactMarkdown>{bubble}</ReactMarkdown>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                    {/* Name label for bot at the bottom of the group if desired, currently using avatar on left */}
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
 
             {isLoading && (
               <div className="flex justify-start gap-3 animate-in fade-in duration-300">
