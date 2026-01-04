@@ -18,40 +18,45 @@ const RagChatbot = () => {
     ]);
     const [input, setInput] = useState('');
     const [logs, setLogs] = useState<{ step: string, msg: string }[]>([]);
+    const [isTyping, setIsTyping] = useState(false);
     const logsEndRef = useRef<HTMLDivElement>(null);
     const msgsEndRef = useRef<HTMLDivElement>(null);
 
     const handleSend = () => {
         if (!input.trim()) return;
 
-        // Add user message
+        // Add user message & Set Typing
         setMessages(prev => [...prev, { role: 'user', text: input }]);
         setInput('');
         setLogs([]); // Clear logs for new turn
+        setIsTyping(true);
 
         // Simulate RAG process
         const mockResponse = getMockResponse(input);
 
-        // Simulate Logs Streaming
-        if (showLogs) {
-            let logIndex = 0;
-            const logInterval = setInterval(() => {
-                if (logIndex >= SAMPLE_LOGS.length) {
-                    clearInterval(logInterval);
-                    // Add bot message after logs
-                    setTimeout(() => {
-                        setMessages(prev => [...prev, { role: 'bot', text: mockResponse }]);
-                    }, 500);
-                    return;
-                }
-                setLogs(prev => [...prev, SAMPLE_LOGS[logIndex]]);
-                logIndex++;
-            }, 400); // 400ms per log
-        } else {
-            setTimeout(() => {
+        // Artificial "Reading" Delay of 1s
+        setTimeout(() => {
+            // Simulate Logs Streaming
+            if (showLogs) {
+                let logIndex = 0;
+                const logInterval = setInterval(() => {
+                    if (logIndex >= SAMPLE_LOGS.length) {
+                        clearInterval(logInterval);
+                        // Add bot message after logs
+                        setTimeout(() => {
+                            setMessages(prev => [...prev, { role: 'bot', text: mockResponse }]);
+                            setIsTyping(false);
+                        }, 500);
+                        return;
+                    }
+                    setLogs(prev => [...prev, SAMPLE_LOGS[logIndex]]);
+                    logIndex++;
+                }, 400); // 400ms per log
+            } else {
                 setMessages(prev => [...prev, { role: 'bot', text: mockResponse }]);
-            }, 1000);
-        }
+                setIsTyping(false);
+            }
+        }, 1000);
     };
 
     const getMockResponse = (query: string) => {
@@ -71,7 +76,7 @@ const RagChatbot = () => {
 
     useEffect(() => {
         msgsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [messages]);
+    }, [messages, isTyping]);
 
     return (
         <section id="chat" className={`container ${styles.section}`}>
@@ -100,6 +105,13 @@ const RagChatbot = () => {
                                     {m.text}
                                 </div>
                             ))}
+                            {isTyping && (
+                                <div className={styles.typingIndicator}>
+                                    <div className={styles.dot}></div>
+                                    <div className={styles.dot}></div>
+                                    <div className={styles.dot}></div>
+                                </div>
+                            )}
                             <div ref={msgsEndRef} />
                         </div>
 
